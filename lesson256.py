@@ -16,5 +16,9 @@ print(idx[0])
 print(idx[1:4])
 print(idx[::-1])
 print(idx[[1,3,4]])
+print('-'*80)
 
-
+idx = pd.Index(['London', 'Paris', 'New York', 'Tokyo'])
+print(idx)
+print(idx[idx != 'Tokyo'])
+print(idx != 'Tokyo')

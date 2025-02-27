@@ -49,6 +49,14 @@ print('-'*80)
 print(pd.Index(range(2,10,2)))
 print(pd.Index([2,4,6,8]))
 print(pd.RangeIndex(2,10,2))
+print('-'*80)
+
+idx = pd.RangeIndex(2,10,2)
+print(idx)
+print(idx[0])
+print(idx[-1])
+print(idx[1:4])
+print('-'*80)
 
 
 

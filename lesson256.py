@@ -44,8 +44,17 @@ print(idx_1.union(idx_2))
 print('-'*80)
 
 print(pd.Index([1,2,3]).union(pd.Index([0.1,0.2])))
-
 print('-'*80)
+
+print(pd.Index(range(2,10,2)))
+print(pd.Index([2,4,6,8]))
+print(pd.RangeIndex(2,10,2))
+
+
+
+
+
+
 
 
 

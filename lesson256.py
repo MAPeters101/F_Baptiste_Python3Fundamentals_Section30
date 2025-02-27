@@ -41,7 +41,11 @@ print(idx_2)
 #print(idx_1 | idx_2)
 print(idx_1.intersection(idx_2))
 print(idx_1.union(idx_2))
+print('-'*80)
 
+print(pd.Index([1,2,3]).union(pd.Index([0.1,0.2])))
+
+print('-'*80)
 
 
 

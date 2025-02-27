@@ -33,8 +33,14 @@ print(idx[0])
 print(idx[1])
 print('-'*80)
 
-
-
+idx_1 = pd.Index(['a','b','c'])
+idx_2 = pd.Index(['c','d','e'])
+print(idx_1)
+print(idx_2)
+#print(idx_1 & idx_2)
+#print(idx_1 | idx_2)
+print(idx_1.intersection(idx_2))
+print(idx_1.union(idx_2))
 
 
 

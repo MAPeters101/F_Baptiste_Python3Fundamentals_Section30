@@ -58,6 +58,14 @@ print(idx[-1])
 print(idx[1:4])
 print('-'*80)
 
+idx_1 = pd.Index(['a','b','c'])
+idx_2 = pd.RangeIndex(0,10,2)
+print('b' in idx_1)
+print(6 in idx_2)
+print('x' in idx_1)
+print(1 in idx_2)
+
+
 
 
 

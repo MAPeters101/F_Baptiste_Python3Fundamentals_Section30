@@ -22,3 +22,20 @@ idx = pd.Index(['London', 'Paris', 'New York', 'Tokyo'])
 print(idx)
 print(idx[idx != 'Tokyo'])
 print(idx != 'Tokyo')
+print('-'*80)
+
+try:
+    idx[0] = 100
+except TypeError as ex:
+    print('TypeError:',ex)
+
+print(idx[0])
+print(idx[1])
+print('-'*80)
+
+
+
+
+
+
+

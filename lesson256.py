@@ -64,9 +64,17 @@ print('b' in idx_1)
 print(6 in idx_2)
 print('x' in idx_1)
 print(1 in idx_2)
+print('-'*80)
 
-
-
+a = {1,1,2,2,3,3}
+print(a)
+idx = pd.Index([1,1,2,2,3,3])
+print(idx)
+print(idx[0])
+print(idx[1])
+print(idx[2])
+print(idx[-1])
+print(idx[-2])
 
 
 

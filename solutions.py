@@ -1,14 +1,19 @@
 '''
 Question 1
-Alongside this notebook is a data file named daily_quotes.csv which contains EOD OHLC/Volume data for a small number of equities over a 6 month period.
+Alongside this notebook is a data file named daily_quotes.csv which contains
+EOD OHLC/Volume data for a small number of equities over a 6 month period.
 
-The first step is to load up this data into a dataframe, ensuring that all data types are correct (datetime objects for dates, floats for OHLC data, and integers for Volume).
+The first step is to load up this data into a dataframe, ensuring that all
+data types are correct (datetime objects for dates, floats for OHLC data, and
+integers for Volume).
 
-Write a function that receives the file name as an argument and returns a dataframe that:
+Write a function that receives the file name as an argument and returns a
+dataframe that:
 
 has the correct data type for each column (str, float, int)
 has a row index based on the symbol column
-In addition, we would like our dataframe to contain columns named and ordered in a specific way:
+In addition, we would like our dataframe to contain columns named and ordered
+in a specific way:
 
 symbol (str)
 date (datetime)
@@ -21,18 +26,23 @@ volume (int)
 
 Hint:
 
-You will want to read up the Pandas docs for read_csv to see how you can handle datetime data directly while loading the data (in particular you should look at the parse_dates option):
+You will want to read up the Pandas docs for read_csv to see how you can handle
+datetime data directly while loading the data (in particular you should look at
+the parse_dates option):
 
 https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
 
-Alternatively, you could convert these objects into proper datetime types after loading by using the Pandas function to_datetime, documented here:
+Alternatively, you could convert these objects into proper datetime types after
+loading by using the Pandas function to_datetime, documented here:
 
 https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html
 
-and then use conatenation to build up a dataframe that replaces the "old" date column with the "new" (properly typed) column.
+and then use conatenation to build up a dataframe that replaces the "old" date
+column with the "new" (properly typed) column.
 
 Solution
-We'll use the Pandas read_csv function to load the dataframe with the column names and index we want to use:
+We'll use the Pandas read_csv function to load the dataframe with the column
+names and index we want to use:
 
 import pandas as pd
 Let's see what our data file looks like before we load it up:
@@ -45,7 +55,9 @@ AAPL,2/12/21,135.37,60145130,134.35,135.53,133.6921
 AMZN,2/12/21,3277.71,2335339,3250,3280.25,3233.31
 GOOG,2/12/21,2104.11,855865,2090.25,2108.82,2083.13
 MSFT,2/12/21,244.99,16561080,243.933,245.3,242.73
-We can see that our columns are ordered as: Symbol, Date, Close/Last, Volume, Open, High, Low - we'll use that fact to rename our columns as we import the data.
+We can see that our columns are ordered as: Symbol, Date, Close/Last, Volume,
+Open, High, Low - we'll use that fact to rename our columns as we import the
+data.
 
 df = pd.read_csv(
     'daily_quotes.csv',
@@ -69,7 +81,8 @@ GOOG	8/13/20	1518.45	1455208	1510.340	1537.2500	1508.0050
 MSFT	8/13/20	208.70	22588870	209.440	211.3500	208.1500
 508 rows × 6 columns
 
-We want to generate a dataframe where the columns are ordered slightly differently, so we can use fancy indexing for that:
+We want to generate a dataframe where the columns are ordered slightly
+differently, so we can use fancy indexing for that:
 
 df = df[['date', 'open', 'high', 'low', 'close', 'volume']]
 df
@@ -106,7 +119,8 @@ dtypes: float64(4), int64(1), object(1)
 memory usage: 27.8+ KB
 So, all the columns except the date column have the correct data type.
 
-We could use Pandas' to_datetime function to cast that column to the proper type:
+We could use Pandas' to_datetime function to cast that column to the proper
+type:
 
 pd.to_datetime(df['date'])
 symbol
@@ -122,9 +136,11 @@ AMZN   2020-08-13
 GOOG   2020-08-13
 MSFT   2020-08-13
 Name: date, Length: 508, dtype: datetime64[ns]
-If we approach it this way, we'll need to concatenate this column with the other columns from our original dataframe to form the new dataframe.
+If we approach it this way, we'll need to concatenate this column with the
+other columns from our original dataframe to form the new dataframe.
 
-Instead, it is quite easy to actually specify that this column should be parsed as a datetime right in the rads_csv function's arguments:
+Instead, it is quite easy to actually specify that this column should be
+parsed as a datetime right in the rads_csv function's arguments:
 
 df = pd.read_csv(
     'daily_quotes.csv',
@@ -149,7 +165,8 @@ GOOG	2020-08-13	1518.45	1455208	1510.340	1537.2500	1508.0050
 MSFT	2020-08-13	208.70	22588870	209.440	211.3500	208.1500
 508 rows × 6 columns
 
-And if we now look at our dataframes columns, we'll see that the date column is actually a datetime object:
+And if we now look at our dataframes columns, we'll see that the date column
+is actually a datetime object:
 
 df.info()
 <class 'pandas.core.frame.DataFrame'>
@@ -165,7 +182,8 @@ Data columns (total 6 columns):
  5   low     508 non-null    float64
 dtypes: datetime64[ns](1), float64(4), int64(1)
 memory usage: 27.8+ KB
-So let's put all this in a function that will return the dataframe that we want based on the data in that file:
+So let's put all this in a function that will return the dataframe that we
+want based on the data in that file:
 
 def load_df(file_name):
     df = pd.read_csv(
@@ -193,14 +211,17 @@ Data columns (total 6 columns):
 dtypes: datetime64[ns](1), float64(4), int64(1)
 memory usage: 27.8+ KB
 Question 2
-Write a function that, given a dataframe sructured as the one we created in Question 1 and a symbol name as a string (e.g. AAPL, MSFT, etc), will:
+Write a function that, given a dataframe sructured as the one we created in
+Question 1 and a symbol name as a string (e.g. AAPL, MSFT, etc), will:
 
-return a similarly structured dataframe consisting of the row (or rows) containing the records with the highest volume for the given symbol
+return a similarly structured dataframe consisting of the row (or rows)
+containing the records with the highest volume for the given symbol
 raises a ValueError if the symbol is not in the dataframe
 Solution
 We'll use the dataframe from Question 1.
 
-We'll want to focus on a single symbol at a time, so we can do this by leveraging the symbol index we have on the dataframe.
+We'll want to focus on a single symbol at a time, so we can do this by
+leveraging the symbol index we have on the dataframe.
 
 For example, to extract just the rows for GOOG, we could do this:
 
@@ -221,14 +242,18 @@ GOOG	2020-08-14	1515.66	1521.9000	1502.880	1507.73	1355200
 GOOG	2020-08-13	1510.34	1537.2500	1508.005	1518.45	1455208
 127 rows × 6 columns
 
-Note that if the symbol does not exist, we get a KeyError exception (which we'll later want to raise as a ValueError instead - although leaving it as a KeyError is probably just fine, it's a good exercise reminding us how to trap and raise exceptions).
+Note that if the symbol does not exist, we get a KeyError exception (which
+we'll later want to raise as a ValueError instead - although leaving it as a
+KeyError is probably just fine, it's a good exercise reminding us how to trap
+and raise exceptions).
 
 try:
     df.loc['ABC', :]
 except KeyError:
     print('Could not find symbol ABC')
 Could not find symbol ABC
-Next, we'll want to identify the max of the Volume column for this particular subset:
+Next, we'll want to identify the max of the Volume column for this particular
+subset:
 
 subset = df.loc['GOOG', :]
 subset['volume']
@@ -253,7 +278,8 @@ Or we could use the max method instead:
 
 subset['volume'].max()
 4330862
-Once we have that number, we can use boolean masking to pick up the specific row (or rows if that same max occurs multiple times) from the dataframe:
+Once we have that number, we can use boolean masking to pick up the specific
+row (or rows if that same max occurs multiple times) from the dataframe:
 
 subset[subset['volume'] == subset['volume'].max()]
 date	open	high	low	close	volume
@@ -294,12 +320,17 @@ except ValueError as ex:
     print(ex)
 Symbol XYZ has no data.
 Question 3
-Using the same dataframe as in the preceding questions, our goal now is to write a function that will return, for a specific symbol, the row that had the largest high-low spread.
+Using the same dataframe as in the preceding questions, our goal now is to
+write a function that will return, for a specific symbol, the row that had the
+largest high-low spread.
 
-Write a function to do that - it should just return a dataframe with the row (or rows) with the largest high-low spread.
+Write a function to do that - it should just return a dataframe with the row
+(or rows) with the largest high-low spread.
 
 Solution
-We'll basically follow the same approach as the last question, but we'll need to calculate the high-low spread - we'll use a Pandas series to first calculate all the high-low deltas:
+We'll basically follow the same approach as the last question, but we'll need
+to calculate the high-low spread - we'll use a Pandas series to first calculate
+all the high-low deltas:
 
 df = load_df('daily_quotes.csv')
 subset = df.loc['AAPL', :]
@@ -319,7 +350,9 @@ AAPL	2020-08-14	114.8288	115.0000	113.0450	114.9075	165565200
 AAPL	2020-08-13	114.4300	116.0425	113.9275	115.0100	210082080
 127 rows × 6 columns
 
-Next, we can calculate the delta between low and high - since high > low we don't actually need to use an absolute value, but I'll do that here anyways, just to be absolutely sure:
+Next, we can calculate the delta between low and high - since high > low we
+don't actually need to use an absolute value, but I'll do that here anyways,
+just to be absolutely sure:
 
 deltas = abs(subset['high'] - subset['low'])
 deltas
@@ -366,9 +399,14 @@ date	open	high	low	close	volume
 symbol
 MSFT	2020-09-03	229.27	229.31	214.9602	217.3	58400290
 Question 4
-Using the same dataframe as the preceding questions, write a function that returns a single dataframe containing the record(s) with maximum high-low spread for each symbol in the dataframe. (Do not hardcode symbol names in this function - instead you should recover the possible symbol names from the data itself).
+Using the same dataframe as the preceding questions, write a function that
+returns a single dataframe containing the record(s) with maximum high-low
+spread for each symbol in the dataframe. (Do not hardcode symbol names in this
+function - instead you should recover the possible symbol names from the data
+itself).
 
-The returned dataframe should have the same structure as the original dataframe, but just contain the rows of maximum high-low spread for each symbol.
+The returned dataframe should have the same structure as the original
+dataframe, but just contain the rows of maximum high-low spread for each symbol.
 
 Solution
 To find all the symbol values, we can simply look at the index on the dataframe:
@@ -385,7 +423,8 @@ From that index we can recover the unique values by using a Python set:
 
 set(df.index)
 {'AAPL', 'AMZN', 'GOOG', 'MSFT'}
-Now that we have the symbol names, we can use the max_spread function we wrote in the last question to generate the dataframe for each symbol:
+Now that we have the symbol names, we can use the max_spread function we wrote
+in the last question to generate the dataframe for each symbol:
 
 for symbol in set(df.index):
     subset = df.loc[symbol, :]
@@ -405,7 +444,8 @@ symbol
 GOOG   2021-02-03  2073.0  2116.5  2018.38  2070.07  4118170
 We can then concatenate all these dataframes along the vertical axis.
 
-What we'll do is use a list comprehension to generate a list of these dataframes, and then use the concat function in Pandas:
+What we'll do is use a list comprehension to generate a list of these
+dataframes, and then use the concat function in Pandas:
 
 max_frames = [
     max_spread(df.loc[symbol, :], symbol)
